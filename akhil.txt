@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam Platform</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main Container */
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Title */
+        h1 {
+            color: #333;
+        }
+
+        /* Quiz Box */
+        .quiz-container {
+            padding: 20px;
+        }
+
+        /* Timer */
+        .timer {
+            font-size: 18px;
+            font-weight: bold;
+            color: red;
+            margin-bottom: 15px;
+        }
+
+        /* Questions */
+        .question {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        /* Radio Button Styling */
+        label {
+            display: block;
+            padding: 8px;
+            background: #f8f8f8;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        label:hover {
+            background: #e0e0e0;
+        }
+
+        /* Submit Button */
+        button {
+            background: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        /* Result Display */
+        .hidden {
+            display: none;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Online Exam Platform</h1>
+        <div class="quiz-container">
+            <div class="timer" id="timer">Time Left: 05:00</div>
+            <form id="quizForm">
+                <div class="question">
+                    <p>1. What is the capital of France?</p>
+                    <label><input type="radio" name="q1" value="Paris"> Paris</label>
+                    <label><input type="radio" name="q1" value="London"> London</label>
+                    <label><input type="radio" name="q1" value="Berlin"> Berlin</label>
+                    <label><input type="radio" name="q1" value="Madrid"> Madrid</label>
+                </div>
+                <div class="question">
+                    <p>2. Which is the largest planet in our solar system?</p>
+                    <label><input type="radio" name="q2" value="Mars"> Mars</label>
+                    <label><input type="radio" name="q2" value="Jupiter"> Jupiter</label>
+                    <label><input type="radio" name="q2" value="Saturn"> Saturn</label>
+                    <label><input type="radio" name="q2" value="Venus"> Venus</label>
+                </div>
+                <button type="button" onclick="submitQuiz()">Submit</button>
+            </form>
+            <div id="result" class="hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        // Timer settings
+        let timeLeft = 300; // 5 minutes
+        const timerDisplay = document.getElementById("timer");
+        const quizForm = document.getElementById("quizForm");
+        const resultDisplay = document.getElementById("result");
+
+        function startTimer() {
+            const timer = setInterval(() => {
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                timerDisplay.innerHTML = Time Left: ${minutes}:${seconds};
+
+                if (timeLeft === 0) {
+                    clearInterval(timer);
+                    submitQuiz(); // Auto-submit when timer reaches 0
+                }
+                timeLeft--;
+            }, 1000);
+        }
+
+        // Quiz Submission and Score Calculation
+        function submitQuiz() {
+            let score = 0;
+            const answers = {
+                q1: "Paris",
+                q2: "Jupiter"
+            };
+
+            Object.keys(answers).forEach((question) => {
+                const selectedOption = document.querySelector(input[name="${question}"]:checked);
+                if (selectedOption && selectedOption.value === answers[question]) {
+                    score++;
+                }
+            });
+
+            quizForm.style.display = "none"; // Hide quiz after submission
+            resultDisplay.innerHTML = Your Score: ${score}/2;
+            resultDisplay.classList.remove("hidden");
+        }
+
+        // Start the timer when the page loads
+        window.onload = startTimer;
+    </script>
+</body>
+</html>
